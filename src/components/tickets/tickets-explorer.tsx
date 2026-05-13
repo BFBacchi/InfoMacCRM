@@ -23,7 +23,7 @@ import { SegmentedControl } from "@/components/ui/segmented-control";
 import { HStack, VStack } from "@/components/ui/stack";
 import { Table } from "@/components/ui/table";
 import { cn } from "@/lib/cn";
-import type { Ticket, TicketStatus } from "@/types/database";
+import type { Ticket, TicketPartsReceived, TicketStatus } from "@/types/database";
 
 const STATUSES: TicketStatus[] = [
   "sin_asignar",
@@ -41,7 +41,13 @@ const STATUS_LABEL: Record<TicketStatus, string> = {
   cerrado_definitivo: "Cerrado definitivo",
 };
 
-type TicketRow = Ticket & { client_name?: string | null };
+const PARTS_LABEL: Record<TicketPartsReceived, string> = {
+  pendiente: "Pendiente",
+  recibida: "Recibida",
+  no_aplica: "No aplica",
+};
+
+type TicketRow = Ticket & { client_name?: string | null; technician_label?: string };
 
 type TechOpt = { id: string; label: string };
 
@@ -102,8 +108,23 @@ export function TicketsExplorer({ initialTickets, clients, technicians, canManag
         header: "Cliente",
         cell: (i) => i.getValue() ?? "—",
       }),
+      colHelper.accessor("equipment_model", {
+        header: "Modelo",
+        cell: (i) => {
+          const v = i.getValue() as string;
+          return v ? (v.length > 28 ? `${v.slice(0, 28)}…` : v) : "—";
+        },
+      }),
       colHelper.accessor("city", { header: "Ciudad", cell: (i) => i.getValue() }),
       colHelper.accessor("province", { header: "Prov.", cell: (i) => i.getValue() }),
+      colHelper.accessor("technician_label", {
+        header: "Técnico",
+        cell: (i) => i.getValue() ?? "—",
+      }),
+      colHelper.accessor("parts_received_status", {
+        header: "Partes",
+        cell: (i) => <Badge>{PARTS_LABEL[i.getValue() as TicketPartsReceived] ?? i.getValue()}</Badge>,
+      }),
       colHelper.accessor("status", {
         header: "Estado",
         cell: (i) => <Badge>{STATUS_LABEL[i.getValue() as TicketStatus]}</Badge>,
@@ -233,7 +254,7 @@ export function TicketsExplorer({ initialTickets, clients, technicians, canManag
       ) : null}
 
       {view === "table" ? (
-        <Table data={{ headers, rows }} className="w-full" />
+        <Table data={{ headers, rows }} className="w-full min-w-[1100px]" />
       ) : (
         <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={onDragEnd}>
           <HStack className="items-start gap-4">
@@ -283,6 +304,9 @@ function DraggableTicket({ ticket }: { ticket: TicketRow }) {
         <VStack className="gap-1">
           <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">{ticket.ticket_number}</p>
           <p className="text-sm text-zinc-800 dark:text-zinc-200">{ticket.city}</p>
+          {ticket.equipment_model ? (
+            <p className="text-xs text-zinc-500 line-clamp-2 dark:text-zinc-400">{ticket.equipment_model}</p>
+          ) : null}
           <Link href={`/tickets/${ticket.id}`} className="text-xs font-medium text-blue-700 hover:underline dark:text-blue-400">
             Abrir
           </Link>

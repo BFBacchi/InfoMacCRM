@@ -54,3 +54,20 @@ export async function computeNearestBases(
     baseInfomacId: bestInfomacIdx >= 0 ? withCoords[bestInfomacIdx]!.id : null,
   };
 }
+
+/**
+ * Distancia en km desde ciudad/provincia del ticket hasta una base concreta (por coordenadas).
+ */
+export async function computeKmTicketToBase(
+  city: string,
+  province: string,
+  baseId: string,
+  bases: Base[],
+): Promise<number | null> {
+  const base = bases.find((b) => b.id === baseId);
+  if (!base || base.lat == null || base.lng == null) return null;
+  const origin = `${city}, ${province}, Argentina`;
+  const dest = `${base.lat},${base.lng}`;
+  const [km] = await fetchMatrixDistancesKm(origin, [dest]);
+  return Number.isFinite(km) && !Number.isNaN(km) ? km : null;
+}

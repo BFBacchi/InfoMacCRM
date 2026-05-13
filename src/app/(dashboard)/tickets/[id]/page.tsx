@@ -37,6 +37,15 @@ export default async function TicketDetailPage({ params }: Props) {
       label: nameBy.get(t.profile_id) ?? t.id.slice(0, 8),
     })) ?? [];
 
+  const { data: bases } = await supabase.from("bases").select("id, name, city, province, type").order("name");
+  const infomacBases =
+    (bases ?? [])
+      .filter((b) => b.type === "infomac")
+      .map((b) => ({
+        id: b.id,
+        label: `${b.name} — ${b.city}, ${b.province}`,
+      })) ?? [];
+
   const canManage = hasRole(profile, ["admin", "coordinator"]);
 
   return (
@@ -44,6 +53,7 @@ export default async function TicketDetailPage({ params }: Props) {
       ticket={ticket}
       history={history ?? []}
       technicians={technicians}
+      infomacBases={infomacBases}
       canManage={canManage}
     />
   );

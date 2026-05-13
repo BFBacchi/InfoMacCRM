@@ -16,6 +16,7 @@ export type TicketStatus =
   | "en_curso"
   | "cerrado_operativo"
   | "cerrado_definitivo";
+export type TicketPartsReceived = "recibida" | "pendiente" | "no_aplica";
 export type PartStatus = "pendiente" | "recibida" | "incorrecta" | "devuelta";
 export type ReturnStatus = "pendiente" | "en_proceso" | "completada";
 
@@ -110,6 +111,10 @@ export interface Database {
           km_infomac: number | null;
           base_infomac_id: string | null;
           notes: string | null;
+          equipment_model: string;
+          end_user_location: string;
+          action_taken: string;
+          parts_received_status: TicketPartsReceived;
           created_at: string;
           updated_at: string;
         };
@@ -134,6 +139,10 @@ export interface Database {
           km_infomac?: number | null;
           base_infomac_id?: string | null;
           notes?: string | null;
+          equipment_model?: string;
+          end_user_location?: string;
+          action_taken?: string;
+          parts_received_status?: TicketPartsReceived;
           id?: string;
           created_at?: string;
           updated_at?: string;

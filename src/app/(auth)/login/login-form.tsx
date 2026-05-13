@@ -78,8 +78,17 @@ export function LoginForm() {
       setInfo(error.message);
       return;
     }
-    setInfo("Revisá tu correo para el enlace mágico.");
+    setInfo("__MAGIC_SENT__");
   });
+
+  const infoVariant = !info
+    ? "warning"
+    : info === "__MAGIC_SENT__"
+      ? "info"
+      : info.includes("caracteres")
+        ? "warning"
+        : "danger";
+  const infoMessage = info === "__MAGIC_SENT__" ? "Revisá tu correo para el enlace mágico." : info;
 
   return (
     <div className="mx-auto grid w-full max-w-5xl gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-10">
@@ -115,7 +124,9 @@ export function LoginForm() {
                 error={!!errors.password}
                 errorMessage={errors.password?.message}
               />
-              {info ? <Alert variant="warning">{info}</Alert> : null}
+              {info ? (
+                <Alert variant={infoVariant}>{infoMessage}</Alert>
+              ) : null}
               <Button type="submit" variant="primary" loading={isSubmitting} fillWidth size="lg">
                 Entrar
               </Button>

@@ -29,9 +29,11 @@ export default async function TicketsPage() {
     })) ?? [];
 
   const clientMap = new Map((clients ?? []).map((c) => [c.id, c.name]));
+  const techById = new Map(technicians.map((x) => [x.id, x.label]));
   const initialTickets = (tickets ?? []).map((t) => ({
     ...t,
     client_name: clientMap.get(t.client_id) ?? null,
+    technician_label: t.technician_id ? techById.get(t.technician_id) ?? "—" : "—",
   }));
 
   const canManage = hasRole(profile, ["admin", "coordinator"]);

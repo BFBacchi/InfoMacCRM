@@ -24,7 +24,7 @@ export function Card({ padding = "m", radius = "l", className, children, ...prop
   return (
     <div
       className={cn(
-        "border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900",
+        "border border-zinc-200/90 bg-white shadow-sm shadow-zinc-950/5 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-black/20",
         paddings[padding],
         radii[radius],
         className,

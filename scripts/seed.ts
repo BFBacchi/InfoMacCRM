@@ -197,6 +197,7 @@ async function main() {
     const ticketRows = [];
     for (let i = 0; i < 10; i++) {
       const [city, prov] = cities[i % cities.length];
+      const partsCycle = ["pendiente", "recibida", "no_aplica"] as const;
       ticketRows.push({
         client_id: i % 2 === 0 ? dellId : lenovoId,
         technician_id: i < 8 ? techIds[i % techIds.length] : null,
@@ -204,7 +205,11 @@ async function main() {
         city,
         province: prov,
         task_type: "diagnostico",
-        description: `Ticket demo ${i + 1}: visita programada`,
+        description: `Ticket demo ${i + 1}: visita programada — escenario de campo`,
+        equipment_model: i % 2 === 0 ? "Dell Latitude 5540" : "Lenovo ThinkPad T14 Gen 3",
+        end_user_location: `Usuario final: Av. Demo ${120 + i}, ${city}`,
+        action_taken: i >= 7 ? "Reinstalación de sistema operativo" : "",
+        parts_received_status: partsCycle[i % 3],
         priority: priorities[i % priorities.length],
         status: statuses[i % statuses.length],
         sla_hours: 48,

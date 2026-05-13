@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
+      <body className="bg-zinc-50 text-zinc-900 selection:bg-blue-200/90 selection:text-blue-950 dark:bg-zinc-950 dark:text-zinc-50 dark:selection:bg-blue-800/55 dark:selection:text-blue-50">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

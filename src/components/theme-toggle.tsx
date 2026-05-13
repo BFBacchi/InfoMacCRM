@@ -33,7 +33,7 @@ export function ThemeToggle() {
           aria-label={label}
           onClick={() => setTheme(value)}
           className={cn(
-            "rounded-md p-2 text-zinc-600 transition-colors hover:bg-zinc-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100",
+            "rounded-md p-2 text-zinc-600 transition-colors hover:bg-zinc-200 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100 dark:focus-visible:ring-offset-zinc-900",
             theme === value && "bg-white text-zinc-900 shadow-sm dark:bg-zinc-950 dark:text-zinc-50",
           )}
         >

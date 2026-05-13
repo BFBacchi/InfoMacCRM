@@ -15,10 +15,10 @@ const variants = {
 } as const;
 
 const sizes = {
-  xs: "px-2 py-1 text-xs",
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-sm",
-  lg: "px-5 py-2.5 text-base",
+  xs: "min-h-8 px-2 py-1 text-xs",
+  sm: "min-h-9 px-3 py-1.5 text-sm",
+  md: "min-h-10 px-4 py-2 text-sm",
+  lg: "min-h-11 px-5 py-2.5 text-base",
 } as const;
 
 function Spinner({ className }: { className?: string }) {
@@ -65,7 +65,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors",
+    "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[color,background-color,border-color,transform,opacity] motion-safe:active:scale-[0.98]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950",
     "disabled:pointer-events-none disabled:opacity-50",
     variants[variant],

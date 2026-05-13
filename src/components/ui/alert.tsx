@@ -14,10 +14,20 @@ export function Alert({
   variant = "warning",
   className,
   children,
+  role,
   ...props
-}: HTMLAttributes<HTMLDivElement> & { variant?: AlertVariant }) {
+}: HTMLAttributes<HTMLDivElement> & { variant?: AlertVariant; role?: "status" | "alert" }) {
+  const liveRole = role ?? (variant === "success" || variant === "info" ? "status" : "alert");
   return (
-    <div className={cn("rounded-lg border px-3 py-2 text-sm", styles[variant], className)} {...props}>
+    <div
+      role={liveRole}
+      className={cn(
+        "rounded-lg border px-3 py-2.5 text-sm leading-relaxed shadow-sm shadow-black/5 dark:shadow-none",
+        styles[variant],
+        className,
+      )}
+      {...props}
+    >
       {children}
     </div>
   );

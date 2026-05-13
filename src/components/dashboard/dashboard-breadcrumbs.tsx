@@ -37,21 +37,23 @@ export function DashboardBreadcrumbs() {
   }
 
   const linkClass =
-    "rounded-md px-1.5 py-0.5 text-sm text-blue-700 transition-colors hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-950/40";
+    "inline-flex min-h-9 min-w-9 max-w-full items-center rounded-md px-2 py-1.5 text-sm text-blue-700 transition-colors hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-blue-400 dark:hover:bg-blue-950/40 dark:focus-visible:ring-offset-zinc-950";
 
   return (
-    <nav className="flex flex-wrap items-center gap-1 text-sm" aria-label="Migas de pan">
+    <nav className="flex flex-wrap items-center gap-x-1 gap-y-1 text-sm" aria-label="Migas de pan">
       <Link href="/dashboard" className={linkClass}>
         Inicio
       </Link>
       {crumbs.map((c, i) => (
-        <span key={c.href} className="flex items-center gap-1">
-          <span className="text-zinc-400">/</span>
+        <span key={c.href} className="flex min-w-0 items-center gap-1">
+          <span className="shrink-0 text-zinc-300 dark:text-zinc-600" aria-hidden>
+            /
+          </span>
           {i === crumbs.length - 1 ? (
-            <span className="px-1.5 py-0.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">{c.label}</span>
+            <span className="min-w-0 truncate px-2 py-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">{c.label}</span>
           ) : (
-            <Link href={c.href} className={cn(linkClass)}>
-              {c.label}
+            <Link href={c.href} className={cn(linkClass, "min-w-0 shrink")}>
+              <span className="truncate">{c.label}</span>
             </Link>
           )}
         </span>
